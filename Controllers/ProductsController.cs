@@ -16,7 +16,7 @@ namespace SellphoneC.Controllers
             this.context = context;
             this.environment = environment;
         }
-        public IActionResult Index(int pageIndex, string? search)
+        public IActionResult Index(int pageIndex, string? search, string? column, string? orderBy)
         {
             IQueryable<Product> query = context.Products;
 
@@ -24,6 +24,20 @@ namespace SellphoneC.Controllers
             if (search != null)
             {
                 query = query.Where(p => p.Name.Contains(search) || p.Brand.Contains(search));
+            }
+
+            // sort functionality
+            string[] validColumns = { "Id", "Name", "Brand", "Category", "Price", "CreatedAt" };
+            string[] validOrderBy = { "desc", "asc" };
+
+            if (!validColumns.Contains(column))
+            {
+                column = "Id";
+            }
+
+            if (!validOrderBy.Contains(orderBy))
+            {
+                orderBy = "desc"; 
             }
 
             query = query.OrderByDescending(p => p.Id);
@@ -45,6 +59,9 @@ namespace SellphoneC.Controllers
             ViewData["TotalPages"] = totalPages;
 
             ViewData["Search"] = search ?? "";
+
+            ViewData["Column"] = column;
+            ViewData["OrderBy"] = orderBy;
 
             return View(products);
         }
