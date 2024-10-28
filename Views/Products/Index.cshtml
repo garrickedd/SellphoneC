@@ -1,4 +1,5 @@
-﻿@using SellphoneC.Models
+﻿@using Microsoft.AspNetCore.Html
+@using SellphoneC.Models
 @model List<Product>
 @{
     int pageIndex = (int)ViewData["PageIndex"]!;
@@ -8,6 +9,18 @@
 
     string column = (string)ViewData["Column"];
     string orderBy = (string)ViewData["OrderBy"];
+
+    HtmlString getArrow(string tableColumn)
+    {
+        if (tableColumn != column) return new HtmlString("");
+
+        if (orderBy == "desc")
+        {
+            return new HtmlString("&duarr;");
+        }
+
+        return new HtmlString("&uarr;");
+    }
 }
 
 <h2 class="text-center mb-5">List of Products</h2>
@@ -41,13 +54,13 @@
 <table class="table">
     <thead>
         <tr>
-            <th style="cursor: pointer;" onclick="sortTable('Id')">ID</th>
-            <th style="cursor: pointer;" onclick="sortTable('Name')">Name</th>
-            <th style="cursor: pointer;" onclick="sortTable('Brand')">Brand</th>
-            <th style="cursor: pointer;" onclick="sortTable('Category')">Category</th>
-            <th style="cursor: pointer;" onclick="sortTable('Price')">Price</th>
+            <th style="cursor: pointer;" onclick="sortTable('Id')">ID @getArrow("Id")</th>
+            <th style="cursor: pointer;" onclick="sortTable('Name')">Name @getArrow("Name")</th>
+            <th style="cursor: pointer;" onclick="sortTable('Brand')">Brand @getArrow("Brand")</th>
+            <th style="cursor: pointer;" onclick="sortTable('Category')">Category @getArrow("Category")</th>
+            <th style="cursor: pointer;" onclick="sortTable('Price')">Price @getArrow("Price")</th>
             <th>Image</th>
-            <th style="cursor: pointer;" onclick="sortTable('Created At')">Created At</th>
+            <th style="cursor: pointer;" onclick="sortTable('Created At')">Created At @getArrow("CreatedAt")</th>
             <th>Action</th>
         </tr>
     </thead>
