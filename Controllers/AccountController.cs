@@ -61,5 +61,15 @@ namespace SellphoneC.Controllers
 
             return View(registerDto);
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            if (signInManager.IsSignedIn(User))
+            {
+                await signInManager.SignOutAsync();
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }
