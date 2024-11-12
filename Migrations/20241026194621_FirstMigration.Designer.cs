@@ -25,7 +25,7 @@ namespace SellphoneC.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BestStoreMVC.Models.Product", b =>
+            modelBuilder.Entity("SellphoneC.Models.Product", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
